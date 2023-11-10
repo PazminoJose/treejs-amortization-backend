@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { FolderConstants } from './commons/constants';
 import { AuthModule } from './modules/auth/auth.module';
+import { CompanyModule } from './modules/company/company.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './modules/auth/auth.module';
       inject: [ConfigService],
     }),
     AuthModule,
+    CompanyModule,
   ],
   controllers: [],
   providers: [],
