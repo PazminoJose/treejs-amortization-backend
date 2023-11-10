@@ -3,11 +3,11 @@ import { CreateRolDto } from './dto/create-rol.dto';
 import { UpdateRolDto } from './dto/update-rol.dto';
 import { Rol, RolDocument } from './schemas/rol.schema';
 import { Model } from "mongoose";
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
-
 export class RolService {
-  constructor(@Injectable(Rol.name) private readonly rolModel: Model<RolDocument>) { }
+  constructor(@InjectModel(Rol.name) private readonly rolModel: Model<RolDocument>) { }
   async create(createRolDto: CreateRolDto) {
     const foundRol = await this.rolModel.findOne({ name: createRolDto.name });
     if (foundRol) throw new Error(`Rol ${createRolDto.name} already exists`);
