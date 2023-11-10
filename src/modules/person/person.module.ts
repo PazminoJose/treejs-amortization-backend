@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { PersonService } from './person.service';
-import { PersonController } from './person.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Person, PersonSchema } from './schemas/person.schema';
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
+import { PersonController } from "./person.controller";
+import { PersonService } from "./person.service";
+import { Person, PersonSchema } from "./schemas/person.schema";
 
 @Module({
   imports: [
@@ -14,6 +14,7 @@ import { Person, PersonSchema } from './schemas/person.schema';
     ])
   ],
   controllers: [PersonController],
-  providers: [PersonService]
+  providers: [PersonService],
+  exports: [PersonService]
 })
 export class PersonModule {}
