@@ -1,16 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { CreateRolDto } from './dto/create-rol.dto';
 import { UpdateRolDto } from './dto/update-rol.dto';
 import { Rol, RolDocument } from './schemas/rol.schema';
 import { Model } from "mongoose";
 import { InjectModel } from '@nestjs/mongoose';
+import { HttpErrorException } from '@commons';
 
 @Injectable()
 export class RolService {
   constructor(@InjectModel(Rol.name) private readonly rolModel: Model<RolDocument>) { }
   async create(createRolDto: CreateRolDto) {
     const foundRol = await this.rolModel.findOne({ name: createRolDto.name });
-    if (foundRol) throw new Error(`Rol ${createRolDto.name} already exists`);
+    if (foundRol) throw new HttpErrorException("Error al encontrar el rol", HttpStatus.BAD_REQUEST);
     const createdRol = await this.rolModel.create(createRolDto);
     return createdRol;
   }
@@ -21,15 +22,7 @@ export class RolService {
 
   async findOne(id: string) {
     const foundRol = await this.rolModel.findById(id);
-    if (!foundRol) throw new Error(`Rol ${id} not found`);
+    if (!foundRol) throw new HttpErrorException("Error al encontrar el rol", HttpStatus.BAD_REQUEST);
     return foundRol;
-  }
-
-  update(id: string, updateRolDto: UpdateRolDto) {
-    return `This action updates a #${id} rol`;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} rol`;
   }
 }

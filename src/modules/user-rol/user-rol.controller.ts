@@ -12,23 +12,9 @@ export class UserRolController {
     return this.userRolService.create(createUserRolDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userRolService.findAll();
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userRolService.findOne(+id);
+  findOne(@Param('id') userId: string) {
+    return this.userRolService.findOne(userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserRolDto: UpdateUserRolDto) {
-    return this.userRolService.update(+id, updateUserRolDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userRolService.remove(+id);
-  }
 }
