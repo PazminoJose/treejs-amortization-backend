@@ -1,4 +1,4 @@
-import { AppRoles } from '@commons';
+import { AppRoles } from "@commons";
 
 export type Roles = {
   _id: string;
@@ -6,8 +6,12 @@ export type Roles = {
 };
 
 export interface LoginResponse {
-  idUser: string;
-  names: string;
-  email: string;
-  roles: Roles[];
+  user: {
+    idUser: string;
+    idPerson: string;
+    names: string;
+    email: string;
+    roles: Roles[];
+  };
+  token: string;
 }
