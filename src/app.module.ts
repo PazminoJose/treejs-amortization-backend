@@ -9,6 +9,9 @@ import { PersonModule } from "./modules/person/person.module";
 import { RolModule } from "./modules/rol/rol.module";
 import { UserRolModule } from "./modules/user-rol/user-rol.module";
 import { UserModule } from "./modules/user/user.module";
+import { UserCompanyModule } from './modules/user-company/user-company.module';
+import { CreditTypeModule } from './modules/credit-type/credit-type.module';
+import { CompanyCreditTypeModule } from './modules/company-credit-type/company-credit-type.module';
 
 @Module({
   imports: [
@@ -28,7 +31,10 @@ import { UserModule } from "./modules/user/user.module";
     RolModule,
     UserRolModule,
     PersonModule,
-    UserModule
+    UserModule,
+    UserCompanyModule,
+    CreditTypeModule,
+    CompanyCreditTypeModule
   ],
   controllers: [],
   providers: []
