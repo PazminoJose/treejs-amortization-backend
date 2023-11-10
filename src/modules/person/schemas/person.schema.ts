@@ -3,7 +3,7 @@ import { HydratedDocument } from "mongoose";
 
 export type PersonDocument = HydratedDocument<Person>;
 
-@Schema({ versionKey: false, timestamps: true })
+@Schema({ versionKey: false })
 export class Person {
   @Prop({ required: true })
   dni: string;
