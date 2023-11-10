@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { Person, PersonDocument } from './schemas/person.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from "mongoose";
+
 
 @Injectable()
 export class PersonService {
-  create(createPersonDto: CreatePersonDto) {
-    return 'This action adds a new person';
+  constructor(@InjectModel(Person.name) private readonly personModel: Model<PersonDocument>) { }
+
+  async create(createPersonDto: CreatePersonDto) {
+    const foundPerson = await this.personModel.findOne({ dni: createPersonDto.dni});
+    if (foundPerson) throw new Error(`Person ${createPersonDto.firstName} already exists`);
+    const createdPerson = await this.personModel.create(createPersonDto);
+    return createdPerson;
   }
 
   findAll() {
-    return `This action returns all person`;
+    return this.personModel.findAll()
   }
 
   findOne(id: number) {

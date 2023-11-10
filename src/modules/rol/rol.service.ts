@@ -16,7 +16,7 @@ export class RolService {
   }
 
   findAll() {
-    return this.rolModel.find();
+    return this.rolModel.findAll();
   }
 
   async findOne(id: string) {
