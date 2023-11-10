@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserRolService } from './user-rol.service';
 import { CreateUserRolDto } from './dto/create-user-rol.dto';
 import { UpdateUserRolDto } from './dto/update-user-rol.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('user-rol')
 @Controller('user-rol')
 export class UserRolController {
   constructor(private readonly userRolService: UserRolService) {}
