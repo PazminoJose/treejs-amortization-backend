@@ -18,7 +18,7 @@ export class PersonService {
   }
 
   findAll() {
-    return this.personModel.findAll()
+    return this.personModel.find()
   }
 
   findOne(id: number) {
