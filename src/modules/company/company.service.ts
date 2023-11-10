@@ -20,7 +20,7 @@ export class CompanyService {
     return this.companyModel.find();
   }
 
-  async findOne(id: number) {
+  async findById(id: number) {
     return this.companyModel.findById(id);
   }
 
