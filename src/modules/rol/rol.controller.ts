@@ -24,13 +24,4 @@ export class RolController {
     return this.rolService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRolDto: UpdateRolDto) {
-    return this.rolService.update(id, updateRolDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.rolService.remove(id);
-  }
 }

@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserRolService } from './user-rol.service';
 import { CreateUserRolDto } from './dto/create-user-rol.dto';
 import { UpdateUserRolDto } from './dto/update-user-rol.dto';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('user-rol')
 @Controller('user-rol')
 export class UserRolController {
   constructor(private readonly userRolService: UserRolService) {}
@@ -12,23 +13,9 @@ export class UserRolController {
     return this.userRolService.create(createUserRolDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userRolService.findAll();
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userRolService.findOne(+id);
+  findOne(@Param('id') userId: string) {
+    return this.userRolService.findOne(userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserRolDto: UpdateUserRolDto) {
-    return this.userRolService.update(+id, updateUserRolDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userRolService.remove(+id);
-  }
 }
