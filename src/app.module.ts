@@ -14,6 +14,8 @@ import { RolModule } from "./modules/rol/rol.module";
 import { UserCompanyModule } from "./modules/user-company/user-company.module";
 import { UserRolModule } from "./modules/user-rol/user-rol.module";
 import { UserModule } from "./modules/user/user.module";
+import { IndirectPaymentModule } from './modules/indirect-payment/indirect-payment.module';
+import { CreditTypeIndirectPaymentModule } from './modules/credit-type-indirect-payment/credit-type-indirect-payment.module';
 
 @Module({
   imports: [
@@ -36,7 +38,9 @@ import { UserModule } from "./modules/user/user.module";
     UserModule,
     UserCompanyModule,
     CreditTypeModule,
-    CompanyCreditTypeModule
+    CompanyCreditTypeModule,
+    IndirectPaymentModule,
+    CreditTypeIndirectPaymentModule
   ],
   controllers: [],
   providers: [

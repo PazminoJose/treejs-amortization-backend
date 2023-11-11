@@ -1,3 +1,4 @@
+import { Roles } from "@commons";
 import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CreditTypeService } from "./credit-type.service";
@@ -7,6 +8,7 @@ import { UpdateCreditTypeDto } from "./dto/update-credit-type.dto";
 @ApiTags("credit-type")
 @ApiBearerAuth()
 @Controller("credit-type")
+@Roles("ADMIN")
 export class CreditTypeController {
   constructor(private readonly creditTypeService: CreditTypeService) {}
 
@@ -16,6 +18,7 @@ export class CreditTypeController {
   }
 
   @Get()
+  @Roles("ALL_LOGGED_USERS")
   findAll() {
     return this.creditTypeService.findAll();
   }

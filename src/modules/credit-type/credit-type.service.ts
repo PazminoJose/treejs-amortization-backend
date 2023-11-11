@@ -22,7 +22,7 @@ export class CreditTypeService {
   }
 
   async findAll() {
-    return this.creditTypeModel.find();
+    return this.creditTypeModel.aggregate([{ $project: { label: "$name", value: "$_id" } }]);
   }
 
   async findById(id: string) {

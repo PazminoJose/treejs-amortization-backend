@@ -2,7 +2,7 @@ import { UppercaseTransform } from "@commons";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsPositive, IsString } from "class-validator";
 
-export class CreateCreditTypeDto {
+export class CreateIndirectPaymentDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -11,13 +11,5 @@ export class CreateCreditTypeDto {
 
   @ApiProperty()
   @IsPositive()
-  interestRate: number;
-
-  @ApiProperty()
-  @IsPositive()
-  maxTime: number;
-
-  @ApiProperty()
-  @IsPositive()
-  minTime: number;
+  mount: number;
 }

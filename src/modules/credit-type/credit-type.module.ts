@@ -14,6 +14,7 @@ import { CreditType, CreditTypeSchema } from "./schemas/credit-type.schema";
     ])
   ],
   controllers: [CreditTypeController],
-  providers: [CreditTypeService]
+  providers: [CreditTypeService],
+  exports: [CreditTypeService]
 })
 export class CreditTypeModule {}

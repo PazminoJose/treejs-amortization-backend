@@ -11,14 +11,16 @@ export class PersonService {
 
   async create(createPersonDto: CreatePersonDto) {
     const foundPerson = await this.personModel.findOne({ dni: createPersonDto.dni });
-    if (foundPerson) throw new HttpErrorException("Error al encontrar al usuario", HttpStatus.BAD_REQUEST);
+    if (foundPerson)
+      throw new HttpErrorException("La persona ya se encuentra registrada", HttpStatus.BAD_REQUEST);
     const createdPerson = await this.personModel.create(createPersonDto);
     return createdPerson;
   }
 
   async createWithSession(createPersonDto: CreatePersonDto, session: mongoose.mongo.ClientSession) {
     const foundPerson = await this.personModel.findOne({ dni: createPersonDto.dni });
-    if (foundPerson) throw new HttpErrorException("Error al encontrar al usuario", HttpStatus.BAD_REQUEST);
+    if (foundPerson)
+      throw new HttpErrorException("La persona ya se encuentra registrada", HttpStatus.BAD_REQUEST);
     const createdPerson = await this.personModel.create([createPersonDto], { session });
     return createdPerson[0];
   }

@@ -6,3 +6,4 @@ export * from "./parse-number.decorator";
 export * from "./public.decorator";
 export * from "./roles.decorator";
 export * from "./super-admin-only.decorator";
+export * from "./uppercase-transform.decorator";

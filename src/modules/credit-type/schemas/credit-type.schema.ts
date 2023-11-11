@@ -10,6 +10,12 @@ export class CreditType {
 
   @Prop({ required: true })
   interestRate: number;
+
+  @Prop({ required: true })
+  maxTime: number;
+
+  @Prop({ required: true })
+  minTime: number;
 }
 
 export const CreditTypeSchema = SchemaFactory.createForClass(CreditType);

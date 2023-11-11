@@ -33,15 +33,15 @@ export class AuthService {
       name: userRole.rol.name as AppRoles
     }));
     const payload: Payload = {
-      idUser: foundUser._id.toString(),
-      idPerson: foundUser.person._id.toString(),
+      userId: foundUser._id.toString(),
+      personId: foundUser.person._id.toString(),
       roles,
       email: foundUser.email
     };
     const token = await this.jwtService.signAsync(payload);
     const user = {
-      idUser: foundUser._id.toString(),
-      idPerson: foundUser.person._id.toString(),
+      userId: foundUser._id.toString(),
+      personId: foundUser.person._id.toString(),
       names: foundUser.person.lastName + " " + foundUser.person.firstName,
       email: foundUser.email,
       roles
@@ -51,7 +51,7 @@ export class AuthService {
 
   async register(registerDto: RegisterDto) {
     const { person, user } = registerDto;
-    const foundUser = this.userService.findByEmail(user.email);
+    const foundUser = await this.userService.findByEmail(user.email);
     if (foundUser) throw new HttpErrorException("Usuario ya registrado", HttpStatus.BAD_REQUEST);
     const transactionSession = await this.connection.startSession();
     transactionSession.startTransaction();

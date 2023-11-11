@@ -7,8 +7,8 @@ export type Roles = {
 
 export interface LoginResponse {
   user: {
-    idUser: string;
-    idPerson: string;
+    userId: string;
+    personId: string;
     names: string;
     email: string;
     roles: Roles[];

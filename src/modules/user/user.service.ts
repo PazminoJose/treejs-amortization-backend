@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
   async create(createUserDto: CreateUserDto) {
-    const foundUser = this.userModel.findOne({ email: createUserDto.email });
+    const foundUser = await this.userModel.findOne({ email: createUserDto.email });
     if (foundUser) throw new HttpErrorException("El usuario ya existe", HttpStatus.BAD_REQUEST);
     const createdUser = await this.userModel.create(createUserDto);
     if (!createdUser) throw new HttpErrorException("Error al crear el usuario", HttpStatus.BAD_REQUEST);
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   async createWithSession(createUserDto: CreateUserDto, session: mongoose.mongo.ClientSession) {
-    const foundUser = this.userModel.findOne({ email: createUserDto.email });
+    const foundUser = await this.userModel.findOne({ email: createUserDto.email });
     if (foundUser) throw new HttpErrorException("El usuario ya existe", HttpStatus.BAD_REQUEST);
     createUserDto.password = await hash(createUserDto.password, this.SALT_ROUNDS);
     const createdUser = await this.userModel.create([createUserDto], { session });
@@ -34,7 +34,7 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    const foundUser = (await this.userModel.findOne({ email: email })).populate("person");
+    const foundUser = await this.userModel.findOne({ email: email }).populate("person");
     return foundUser;
   }
 }
