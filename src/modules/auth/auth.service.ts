@@ -5,6 +5,7 @@ import { InjectConnection } from "@nestjs/mongoose";
 import { compare } from "bcrypt";
 import mongoose from "mongoose";
 import { PersonService } from "../person/person.service";
+import { RolService } from "../rol/rol.service";
 import { UserRolService } from "../user-rol/user-rol.service";
 import { UserService } from "../user/user.service";
 import { LoginDto } from "./dto/login.dto";
@@ -13,11 +14,14 @@ import { LoginResponse, Payload } from "./interfaces";
 
 @Injectable()
 export class AuthService {
+  private readonly DEFAULT_ROL = "USER";
+
   constructor(
     @InjectConnection() private readonly connection: mongoose.Connection,
     private readonly userService: UserService,
     private readonly userRolService: UserRolService,
     private readonly personService: PersonService,
+    private readonly rolService: RolService,
     private readonly jwtService: JwtService
   ) {}
   async login(loginDto: LoginDto): Promise<LoginResponse> {
@@ -58,7 +62,15 @@ export class AuthService {
     try {
       const newPerson = await this.personService.createWithSession(person, transactionSession);
       const personId = newPerson._id.toString();
-      await this.userService.createWithSession({ ...user, person: personId }, transactionSession);
+      const newUser = await this.userService.createWithSession(
+        { ...user, person: personId },
+        transactionSession
+      );
+      const rol = await this.rolService.findByName(this.DEFAULT_ROL);
+      await this.userRolService.createWithSession(
+        { rol: rol._id.toString(), user: newUser._id.toString() },
+        transactionSession
+      );
       await transactionSession.commitTransaction();
       await transactionSession.endSession();
     } catch (error) {

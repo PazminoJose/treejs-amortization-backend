@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { PersonModule } from "../person/person.module";
+import { RolModule } from "../rol/rol.module";
 import { UserRolModule } from "../user-rol/user-rol.module";
 import { UserModule } from "../user/user.module";
 import { AuthController } from "./auth.controller";
@@ -19,7 +20,8 @@ import { AuthService } from "./auth.service";
     }),
     UserModule,
     UserRolModule,
-    PersonModule
+    PersonModule,
+    RolModule
   ],
   controllers: [AuthController],
   providers: [AuthService]

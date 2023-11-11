@@ -1,14 +1,13 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { CreateRolDto } from './dto/create-rol.dto';
-import { UpdateRolDto } from './dto/update-rol.dto';
-import { Rol, RolDocument } from './schemas/rol.schema';
+import { HttpErrorException } from "@commons";
+import { HttpStatus, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { InjectModel } from '@nestjs/mongoose';
-import { HttpErrorException } from '@commons';
+import { CreateRolDto } from "./dto/create-rol.dto";
+import { Rol, RolDocument } from "./schemas/rol.schema";
 
 @Injectable()
 export class RolService {
-  constructor(@InjectModel(Rol.name) private readonly rolModel: Model<RolDocument>) { }
+  constructor(@InjectModel(Rol.name) private readonly rolModel: Model<RolDocument>) {}
   async create(createRolDto: CreateRolDto) {
     const foundRol = await this.rolModel.findOne({ name: createRolDto.name });
     if (foundRol) throw new HttpErrorException("Error al encontrar el rol", HttpStatus.BAD_REQUEST);
@@ -18,6 +17,12 @@ export class RolService {
 
   findAll() {
     return this.rolModel.find();
+  }
+
+  async findByName(rolName: string) {
+    const foundRol = await this.rolModel.findOne({ rolName });
+    if (!foundRol) throw new HttpErrorException("Rol no encontrado", HttpStatus.NOT_FOUND);
+    return foundRol;
   }
 
   async findOne(id: string) {

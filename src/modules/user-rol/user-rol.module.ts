@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { RolSchema } from "../rol/schemas/rol.schema";
-import { UserRol } from "./schemas/user-rol.schema";
+import { UserRol, UserRolSchema } from "./schemas/user-rol.schema";
 import { UserRolController } from "./user-rol.controller";
 import { UserRolService } from "./user-rol.service";
 
@@ -10,7 +9,7 @@ import { UserRolService } from "./user-rol.service";
     MongooseModule.forFeature([
       {
         name: UserRol.name,
-        schema: RolSchema
+        schema: UserRolSchema
       }
     ])
   ],
