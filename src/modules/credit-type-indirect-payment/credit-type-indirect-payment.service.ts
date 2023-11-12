@@ -40,6 +40,9 @@ export class CreditTypeIndirectPaymentService {
     return this.creditTypeIndirectPaymentModel.find();
   }
 
+  async findAllWithIndirectPayment() {
+    return (this.creditTypeIndirectPaymentModel.find().populate("indirectPayment").populate("creditType"));
+  }
   async findByCreditTypeId(creditTypeId: string) {
     const pipeline: PipelineStage[] = [
       {

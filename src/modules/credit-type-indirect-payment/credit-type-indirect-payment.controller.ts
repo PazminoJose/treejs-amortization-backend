@@ -21,6 +21,11 @@ export class CreditTypeIndirectPaymentController {
     return this.creditTypeIndirectPaymentService.findAll();
   }
 
+  @Get("all-with-indirect-payment")
+  findAllWithIndirectPayment() {
+    return this.creditTypeIndirectPaymentService.findAllWithIndirectPayment();
+  }
+
   @Get("credit-type/:creditTypeId")
   @Roles("ALL_LOGGED_USERS")
   findByCreditTypeId(@Param("creditTypeId") creditTypeId: string) {
