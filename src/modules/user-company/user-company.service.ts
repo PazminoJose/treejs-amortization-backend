@@ -1,7 +1,7 @@
 import { HttpErrorException } from "@commons";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { CreateUserCompanyDto } from "./dto/create-user-company.dto";
 import { UpdateUserCompanyDto } from "./dto/update-user-company.dto";
 import { UserCompany, UserCompanyDocument } from "./schemas/user-company.schema";
@@ -22,12 +22,25 @@ export class UserCompanyService {
     return newUserCompany;
   }
 
+  async createWithSession(createUserCompanyDto: CreateUserCompanyDto, session: mongoose.mongo.ClientSession) {
+    const foundUserCompany = await this.userCompanyModel.findOne({
+      user: createUserCompanyDto.user,
+      company: createUserCompanyDto.company
+    });
+    if (foundUserCompany)
+      throw new HttpErrorException("El usuario ya esta registrado ene sta compañía", HttpStatus.BAD_REQUEST);
+    const newUserCompany = await this.userCompanyModel.create([createUserCompanyDto], { session: session });
+    if (newUserCompany.length === 0)
+      throw new HttpErrorException("Error al crear el usuarios", HttpStatus.BAD_REQUEST);
+    return newUserCompany[0];
+  }
+
   async findAll() {
     return this.userCompanyModel.find();
   }
 
   async findByUserId(userId: string) {
-    const foundUserCompany = await this.userCompanyModel.findOne({ user: userId });
+    const foundUserCompany = await this.userCompanyModel.findOne({ user: userId }).populate("company");
     if (!foundUserCompany)
       throw new HttpErrorException("El usuario no esta registrado en ninguna compañía", HttpStatus.NOT_FOUND);
     return foundUserCompany;

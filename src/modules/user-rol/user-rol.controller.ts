@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { UserRolService } from './user-rol.service';
-import { CreateUserRolDto } from './dto/create-user-rol.dto';
-import { UpdateUserRolDto } from './dto/update-user-rol.dto';
-import { ApiTags } from '@nestjs/swagger';
-@ApiTags('user-rol')
-@Controller('user-rol')
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
+import { CreateUserRolDto } from "./dto/create-user-rol.dto";
+import { UserRolService } from "./user-rol.service";
+@ApiTags("user-rol")
+@Controller("user-rol")
 export class UserRolController {
   constructor(private readonly userRolService: UserRolService) {}
 
@@ -13,9 +12,8 @@ export class UserRolController {
     return this.userRolService.create(createUserRolDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') userId: string) {
-    return this.userRolService.findOne(userId);
+  @Get("/user/:userId")
+  findByUserId(@Param("userId") userId: string) {
+    return this.userRolService.findByUserId(userId);
   }
-
 }

@@ -28,6 +28,11 @@ export class CreditTypeController {
     return this.creditTypeService.findById(id);
   }
 
+  @Get("user/:userId")
+  findByUserId(@Param("userId") userId: string) {
+    // return this.creditTypeService.findByUserId(userId);
+  }
+
   @Patch(":id")
   update(@Param("id") id: string, @Body() updateCreditTypeDto: UpdateCreditTypeDto) {
     return this.creditTypeService.update(id, updateCreditTypeDto);

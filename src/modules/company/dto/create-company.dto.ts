@@ -24,6 +24,5 @@ export class CreateCompanyDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   logo?: string;
 }

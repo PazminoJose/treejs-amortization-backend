@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { ValidateNested } from "class-validator";
+import { IsMongoId, ValidateNested } from "class-validator";
 import { CreatePersonDto } from "src/modules/person/dto/create-person.dto";
 import { CreateUserDto } from "src/modules/user/dto/create-user.dto";
 
@@ -14,4 +14,8 @@ export class RegisterDto {
   @Type(() => CreatePersonDto)
   @ValidateNested()
   person: CreatePersonDto;
+
+  @ApiProperty()
+  @IsMongoId()
+  company: string;
 }

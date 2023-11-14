@@ -19,8 +19,8 @@ export class RolService {
     return this.rolModel.find();
   }
 
-  async findByName(rolName: string) {
-    const foundRol = await this.rolModel.findOne({ rolName });
+  async findByName(name: string) {
+    const foundRol = await this.rolModel.findOne({ name });
     if (!foundRol) throw new HttpErrorException("Rol no encontrado", HttpStatus.NOT_FOUND);
     return foundRol;
   }

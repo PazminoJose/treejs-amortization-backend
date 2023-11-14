@@ -17,7 +17,7 @@ export class UserRolService {
     return createdUserRol;
   }
 
-  async findOne(userId: string) {
+  async findByUserId(userId: string) {
     const foundUserRol = await this.userRolModel.find({ user: userId }).populate("rol");
     return foundUserRol;
   }

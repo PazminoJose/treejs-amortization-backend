@@ -1,5 +1,5 @@
-import { Roles } from "@commons";
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { FilesUploadInterceptor, FolderConstants, Roles, UploadedMulterFiles } from "@commons";
+import { Body, Controller, Get, Param, Patch, Post, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { CompanyService } from "./company.service";
 import { CreateCompanyDto } from "./dto/create-company.dto";
@@ -13,14 +13,23 @@ export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
   @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companyService.create(createCompanyDto);
+  @UseInterceptors(
+    FilesUploadInterceptor([{ name: "logo", maxCount: 1 }], { destination: FolderConstants.getLogosPath() })
+  )
+  create(@Body() createCompanyDto: CreateCompanyDto, @UploadedFiles() files: UploadedMulterFiles) {
+    return this.companyService.create(createCompanyDto, files);
   }
 
   @Roles("ALL_LOGGED_USERS")
   @Get()
   findAll() {
     return this.companyService.findAll();
+  }
+
+  @Roles("ALL_LOGGED_USERS")
+  @Get("combo")
+  findAllCombo() {
+    return this.companyService.findAllCombo();
   }
 
   @Get(":id")

@@ -25,7 +25,6 @@ export function FilesUploadInterceptor(
       uploadFields.forEach((field) => {
         fieldDestination[field.name] = field.destination;
       });
-      const ctx = context.switchToHttp();
       const fileIntConst = FileFieldsInterceptor(uploadFields, {
         storage: multer.diskStorage({
           destination(_req, file, callback) {

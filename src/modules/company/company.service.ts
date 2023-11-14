@@ -1,4 +1,4 @@
-import { HttpErrorException } from "@commons";
+import { FolderConstants, HttpErrorException, UploadedMulterFiles } from "@commons";
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
@@ -10,14 +10,19 @@ import { Company } from "./schemas/company.schema";
 export class CompanyService {
   constructor(@InjectModel(Company.name) private readonly companyModel: Model<Company>) {}
 
-  async create(createCompanyDto: CreateCompanyDto) {
-    const newCompany = await this.companyModel.create(createCompanyDto);
+  async create(createCompanyDto: CreateCompanyDto, files: UploadedMulterFiles) {
+    const logo = FolderConstants.getLogosWebPath(files.logo[0].filename);
+    const newCompany = await this.companyModel.create({ ...createCompanyDto, logo });
     if (!newCompany) throw new HttpErrorException("Error al crear la compañía", HttpStatus.BAD_REQUEST);
     return newCompany;
   }
 
   async findAll() {
     return this.companyModel.find();
+  }
+
+  async findAllCombo() {
+    return this.companyModel.aggregate([{ $project: { label: "$name", value: "$_id" } }]);
   }
 
   async findById(id: number) {

@@ -22,9 +22,14 @@ export class CompanyCreditTypeController {
     return this.companyCreditTypeService.findAll();
   }
 
-  @Get(":companyId")
-  findByCompanyId(@Param("companyId") companyId: string) {
-    return this.companyCreditTypeService.findByCompanyId(companyId);
+  @Get("company")
+  findByCompanyId() {
+    return this.companyCreditTypeService.findByCompanyId();
+  }
+
+  @Get("company/combo/:companyId")
+  findByCompanyIdCombo(@Param("companyId") companyId: string) {
+    return this.companyCreditTypeService.findByCompanyIdCombo(companyId);
   }
 
   @Patch(":id")
